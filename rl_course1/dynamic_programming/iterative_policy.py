@@ -31,7 +31,7 @@ def print_policy(P: Dict, g: GridWorld):
     for row in range(g.nrows):
         print("-" * 10)
         for col in range(g.ncols):
-            act = P.get((row, col), "None")
+            act = P[(row, col)] if not g.game_over((row, col)) else "None"
 
             print(f" {act} |", end="")
 
