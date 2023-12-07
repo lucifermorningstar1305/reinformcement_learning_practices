@@ -105,7 +105,7 @@ class WindyGridWorld(object):
 
     def get_all_states(self):
         """Function to return the complete space"""
-        return set(self.actions.keys()).union(set(self.rewards.keys()))
+        return set(self.actions.keys()) | set(self.rewards.keys())
 
     def move(self, action: str):
         """Function to move the agent based on an action"""
