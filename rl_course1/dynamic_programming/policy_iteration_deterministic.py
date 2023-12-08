@@ -47,22 +47,23 @@ def evaluate_policy(grid: GridWorld, policy: Dict, initV: Optional[Dict] = None)
     while True:
         delta = 0
         for s in grid.get_all_states():
-            v_old = V[s]
-            v_new = 0
+            if not grid.game_over(s):
+                v_old = V[s]
+                v_new = 0
 
-            for a in ACTION_SPACE:
-                for s_next in grid.get_all_states():
-                    action_prob = 1.0 if policy.get(s) == a else 0.0
-                    r = rewards.get((s, a, s_next), 0.0)
+                for a in ACTION_SPACE:
+                    for s_next in grid.get_all_states():
+                        action_prob = 1.0 if policy.get(s) == a else 0.0
+                        r = rewards.get((s, a, s_next), 0.0)
 
-                    v_new += (
-                        action_prob
-                        * state_transition.get((s, a, s_next), 0.0)
-                        * (r + GAMMA * V[s_next])
-                    )
+                        v_new += (
+                            action_prob
+                            * state_transition.get((s, a, s_next), 0.0)
+                            * (r + GAMMA * V[s_next])
+                        )
 
-            V[s] = v_new
-            delta = max(delta, np.abs(v_old - V[s]))
+                V[s] = v_new
+                delta = max(delta, np.abs(v_old - V[s]))
 
         idx += 1
         if delta < THRESHOLD:
