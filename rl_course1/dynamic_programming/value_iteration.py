@@ -29,6 +29,10 @@ if __name__ == "__main__":
     grid = windy_grid()
     state_transition, rewards = get_state_trans_probs(grid)
 
+    print("Rewards:")
+    print_values(V=grid.rewards, g=grid)
+    print("\n\n")
+
     # initialize state-value for all states
     V = dict()
     for s in grid.get_all_states():
